@@ -1,12 +1,12 @@
-on
-  - push:
+on:
+  - push
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
 jobs:
     init:
-    runs-on: ubuntu-latest
-         steps:
+      runs-on: ubuntu-latest
+      steps:
          - name: clone repo
            uses: action/checkout@v4
          - name: Install terraform
