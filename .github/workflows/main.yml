@@ -1,0 +1,29 @@
+on
+  - push:
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+jobs:
+    init:
+    runs-on: ubuntu-latest
+         steps:
+         - name: clone repo
+           uses: action/checkout@v4
+         - name: Install terraform
+           uses: hashicorp/Setup-terraforn@v3
+           with:
+             terraform_version: "2.0.1"
+         - name: init
+           run: terraform init
+         - name: plan
+           run: terraform plan
+         - name: run checkov
+           if: success()
+           uses: bridgecrewio/checkov-action@master
+           with:
+              directory: .
+              soft_fail: true
+              framework: terraform
+         - name: plan
+           if: success()
+           run: terraform apply -auto-approve
