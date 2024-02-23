@@ -10,7 +10,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
          - name: clone repo
-           uses: action/checkout@v4
+           uses: actions/checkout@v4
          - name: Install terraform
            uses: hashicorp/Setup-terraforn@v3
            with:
