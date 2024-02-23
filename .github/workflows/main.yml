@@ -12,18 +12,19 @@ jobs:
          - name: Install terraform
            uses: hashicorp/Setup-terraforn@v3
            with:
-             terraform_version: "2.0.1"
+             terraform_version: "1.1.7"
          - name: init
            run: terraform init
+         - name: format
+           run: terraform fmt
          - name: plan
            run: terraform plan
          - name: run checkov
            if: success()
            uses: bridgecrewio/checkov-action@master
-           with:
-              directory: .
-              soft_fail: true
-              framework: terraform
+           with:
+            output_format: cli,sarif
+            output_file_path: console,results.sarif
          - name: plan
            if: success()
            run: terraform apply -auto-approve
